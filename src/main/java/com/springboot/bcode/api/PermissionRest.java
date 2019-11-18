@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.bcode.domain.auth.Permission;
 import com.springboot.bcode.service.IPermissionService;
+import com.springboot.common.algorithm.PermissionAlgorithm;
 import com.springboot.common.exception.AuthException;
-import com.springboot.core.algorithm.PermissionRecursion;
 import com.springboot.core.logger.OpertionBLog;
 import com.springboot.core.security.authorize.Requestauthorize;
 import com.springboot.core.web.mvc.BaseRest;
@@ -43,7 +43,7 @@ public class PermissionRest extends BaseRest {
 	public ResponseResult queryAll() {
 		ResponseResult rep = new ResponseResult();
 		try {
-			rep.setResult(PermissionRecursion.recursion(rightService.queryAll()));
+			rep.setResult(PermissionAlgorithm.tree(rightService.queryAll()));
 		} catch (AuthException e) {
 			rep.setCode(CODE_500);
 			rep.setMsg(e.getMessage());
@@ -67,7 +67,7 @@ public class PermissionRest extends BaseRest {
 			@PathVariable("roleId") Integer roleId) {
 		ResponseResult rep = new ResponseResult();
 		try {
-			rep.setResult(PermissionRecursion.recursion(rightService
+			rep.setResult(PermissionAlgorithm.tree(rightService
 					.queryByRole(new Integer[] { roleId })));
 		} catch (AuthException e) {
 			rep.setCode(CODE_500);

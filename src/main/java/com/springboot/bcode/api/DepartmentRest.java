@@ -9,19 +9,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.bcode.domain.auth.Department;
 import com.springboot.bcode.service.IDepartmentService;
+import com.springboot.common.algorithm.DepartmentAlgorithm;
 import com.springboot.common.exception.AuthException;
-import com.springboot.core.algorithm.DepartmentRecursion;
 import com.springboot.core.logger.OpertionBLog;
 import com.springboot.core.security.authorize.Requestauthorize;
 import com.springboot.core.web.mvc.BaseRest;
 import com.springboot.core.web.mvc.ResponseResult;
+
 /**
  * 部门接口
-* @ClassName: DepartmentRest 
-* @Description: TODO(这里用一句话描述这个类的作用) 
-* @author 252956
-* @date 2019年10月21日 下午4:56:18 
-*
+ * 
+ * @ClassName: DepartmentRest
+ * @Description: TODO(这里用一句话描述这个类的作用)
+ * @author 252956
+ * @date 2019年10月21日 下午4:56:18
+ *
  */
 @RestController
 @RequestMapping(value = "/rest/department")
@@ -39,8 +41,7 @@ public class DepartmentRest extends BaseRest {
 	public ResponseResult queryAll() {
 		ResponseResult rep = new ResponseResult();
 		try {
-			rep.setResult(DepartmentRecursion.recursion(departmentService
-					.queryAll()));
+			rep.setResult(DepartmentAlgorithm.tree(departmentService.queryAll()));
 		} catch (AuthException e) {
 			rep.setCode(CODE_500);
 			rep.setMsg(e.getMessage());

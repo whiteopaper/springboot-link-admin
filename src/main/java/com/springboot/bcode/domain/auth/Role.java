@@ -32,7 +32,7 @@ public class Role extends JqGridParam {
 	// 自定义数据权限
 	private Integer deptIds[];
 	// 权限id
-	private String permIds;
+	private Integer permIds[];
 
 	public Integer getId() {
 		return id;
@@ -58,11 +58,12 @@ public class Role extends JqGridParam {
 		this.description = description;
 	}
 
-	public String getPermIds() {
+
+	public Integer[] getPermIds() {
 		return permIds;
 	}
 
-	public void setPermIds(String permIds) {
+	public void setPermIds(Integer[] permIds) {
 		this.permIds = permIds;
 	}
 

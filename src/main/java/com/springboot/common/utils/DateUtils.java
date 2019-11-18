@@ -162,7 +162,7 @@ public class DateUtils {
 	 */
 	public static LinkedHashSet<String> yearAndQuarter(long startDate,
 			long endDate) {
-		LinkedHashSet<String> quarters = new LinkedHashSet<>();
+		LinkedHashSet<String> quarters = new LinkedHashSet<String>();
 		final Calendar cal = calendar(startDate);
 		while (startDate <= endDate) {
 			// 如果开始时间超出结束时间，让结束时间为开始时间，处理完后结束循环

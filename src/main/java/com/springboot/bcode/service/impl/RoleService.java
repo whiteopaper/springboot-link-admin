@@ -56,8 +56,8 @@ public class RoleService implements IRoleService {
 		if (StringUtils.isBlank(role.getName())) {
 			throw new AuthException("角色名不能为空");
 		}
-		if (StringUtils.isBlank(role.getPermIds())) {
-			throw new AuthException("权限许可不能为空");
+		if (role.getPermIds() == null || role.getPermIds() == null) {
+			throw new AuthException("条件不能为空");
 		}
 		int result = roleDao.insertRetrunId(role);
 		if (result <= 0) {
@@ -81,10 +81,9 @@ public class RoleService implements IRoleService {
 		if (StringUtils.isBlank(role.getName())) {
 			throw new AuthException("角色名不能为空");
 		}
-		if (StringUtils.isBlank(role.getPermIds())) {
-			throw new AuthException("权限许可不能为空");
+		if (role.getPermIds() == null || role.getPermIds() == null) {
+			throw new AuthException("条件不能为空");
 		}
-
 		Role roleInfo = roleDao.select(role.getId());
 		if (roleInfo == null) {
 			throw new AuthException("未查询到角色信息");
@@ -105,17 +104,13 @@ public class RoleService implements IRoleService {
 
 	public boolean saveRelationRight(Role role) throws AuthException {
 
-		String permIds[] = role.getPermIds().split(",");
-		if (permIds == null || permIds.length == 0) {
-			throw new AuthException("权限许可不能为空");
-		}
 
 		List<RolePermission> rpList = new ArrayList<RolePermission>();
 		RolePermission rp = null;
-		for (int i = 0; i < permIds.length; i++) {
+		for (int i = 0; i < role.getPermIds().length; i++) {
 			rp = new RolePermission();
 			rp.setRoleId(role.getId());
-			rp.setPermId(Integer.parseInt(permIds[i]));
+			rp.setPermId(role.getPermIds()[i]);
 			rpList.add(rp);
 		}
 		roleDao.insert(rpList);

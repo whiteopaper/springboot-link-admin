@@ -16,7 +16,7 @@ public class Permission implements Comparable<Permission> {
 	@Columns(column = "name")
 	private String name;
 	@Columns(column = "types")
-	private Integer types; // '0:菜单，1:按钮',
+	private Integer types; //0目录 '1:菜单，2:按钮',
 	@Columns(column = "state")
 	private Integer state;
 	@Columns(column = "description")
@@ -31,7 +31,7 @@ public class Permission implements Comparable<Permission> {
 	
 	
 	@Columns(column = "i_frame")
-	private Integer i_frame;//是否外链 2不是，1是
+	private Integer i_frame;//是否外链 0不是，1是
 	
 	@Columns(column = "component_name")
 	private String component_name;//组件名称
@@ -43,16 +43,16 @@ public class Permission implements Comparable<Permission> {
 	private String icon;//图标
 	
 	@Columns(column = "cache")
-	private Integer cache;//是否缓存 2:不是 1是
+	private Integer cache;//是否缓存 0:不是 1是
 	
 	@Columns(column = "hidden")
-	private Integer hidden;//是否隐藏 2:不是 1是
+	private Integer hidden;//是否隐藏0:不是 1是
 	
 	// 子权限集合
 	private List<Permission> childrens;
 
 	public boolean isMenu() {
-		if (this.types == 0) {
+		if (this.types == 0 || this.types == 1) {
 			return true;
 		}
 		return false;
@@ -66,7 +66,7 @@ public class Permission implements Comparable<Permission> {
 	}
 
 	public boolean isPermission() {
-		if (this.types == 1) {
+		if (this.types == 2) {
 			return true;
 		}
 		return false;
@@ -210,13 +210,6 @@ public class Permission implements Comparable<Permission> {
 		return -1;
 	}
 
-	public Integer getI_frame() {
-		return i_frame;
-	}
-
-	public void setI_frame(Integer i_frame) {
-		this.i_frame = i_frame;
-	}
 
 	public String getComponent_name() {
 		return component_name;
@@ -242,6 +235,14 @@ public class Permission implements Comparable<Permission> {
 		this.icon = icon;
 	}
 
+	public Integer getI_frame() {
+		return i_frame;
+	}
+
+	public void setI_frame(Integer i_frame) {
+		this.i_frame = i_frame;
+	}
+
 	public Integer getCache() {
 		return cache;
 	}
@@ -257,6 +258,6 @@ public class Permission implements Comparable<Permission> {
 	public void setHidden(Integer hidden) {
 		this.hidden = hidden;
 	}
-	
+
 	
 }

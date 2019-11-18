@@ -69,6 +69,7 @@ public class UserRest extends BaseRest {
 		} catch (Exception e) {
 			rep.setCode(CODE_500);
 			rep.setMsg("系统异常.请稍后再试");
+			LoggerUtil.error(e.getMessage());
 		}
 		return rep;
 	}

@@ -131,7 +131,6 @@ public class Department implements Comparable<Department> {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((levels == null) ? 0 : levels.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
 				+ ((parentId == null) ? 0 : parentId.hashCode());
@@ -151,11 +150,6 @@ public class Department implements Comparable<Department> {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
-		if (levels == null) {
-			if (other.levels != null)
-				return false;
-		} else if (!levels.equals(other.levels))
 			return false;
 		if (name == null) {
 			if (other.name != null)

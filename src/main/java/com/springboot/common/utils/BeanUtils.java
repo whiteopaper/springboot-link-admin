@@ -224,7 +224,7 @@ public class BeanUtils implements Serializable {
 	 */
 	private static <T> List<Field> getFields(Class<T> targetClazz) {
 
-		List<Field> list = new ArrayList<>();
+		List<Field> list = new ArrayList<Field>();
 
 		for (Field field : targetClazz.getDeclaredFields()) {
 			list.add(field);

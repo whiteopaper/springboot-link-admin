@@ -25,12 +25,13 @@ import com.springboot.bcode.service.IRoleService;
 import com.springboot.bcode.service.IUserService;
 import com.springboot.common.AppToken;
 import com.springboot.common.GlobalUser;
+import com.springboot.common.algorithm.DepartmentAlgorithm;
+import com.springboot.common.algorithm.PermissionAlgorithm;
 import com.springboot.common.exception.AuthException;
 import com.springboot.common.utils.BeanUtils;
 import com.springboot.common.utils.MD5Utils;
 import com.springboot.common.utils.StringUtils;
 import com.springboot.common.utils.UUIDUtils;
-import com.springboot.core.algorithm.DepartmentRecursion;
 import com.springboot.core.web.mvc.JqGridPage;
 
 @Service
@@ -124,8 +125,10 @@ public class UserService implements IUserService {
 				permissions.add(perm);
 			}
 		}
+		menus=PermissionAlgorithm.tree(menus);
+		
 		user.setRoles(roles);
-		user.setMenus(menus);
+		user.setMenus(PermissionAlgorithm.buildMenu(menus));
 		user.setPermissions(permissions);
 		user.setDatascopes(getDateScopes(user));
 		GlobalUser.setUserInfo(user);
@@ -140,7 +143,7 @@ public class UserService implements IUserService {
 	 * @return List<Integer> 返回类型
 	 *
 	 */
-	public List<Integer> getDateScopes(UserInfo user) {
+	private List<Integer> getDateScopes(UserInfo user) {
 		List<Integer> dataScopeList = new ArrayList<Integer>();
 		List<Department> deptAllList = departmentService.queryAll();
 		for (Role role : user.getRoles()) {
@@ -152,18 +155,18 @@ public class UserService implements IUserService {
 				for (Department dept : deptAllList) {
 					dataScopeList.add(dept.getId());
 				}
-				// 3本部门数据权限
+				// 3本部门及以下数据权限
 			} else if ("3".equals(role.getData_scope())) {
-				dataScopeList.add(user.getDeptid());
-				// 4本部门及以下数据权限
-			} else if ("4".equals(role.getData_scope())) {
-				List<Department> selfAndAllChildList = DepartmentRecursion
+				List<Department> findSelfAndAllChild = DepartmentAlgorithm
 						.findSelfAndAllChild(user.getDeptid(), deptAllList);
-				for (Department dept : selfAndAllChildList) {
+				for (Department dept : findSelfAndAllChild) {
 					if (!dataScopeList.contains(dept.getId().toString())) {
 						dataScopeList.add(dept.getId());
 					}
 				}
+				// 4本部门数据权限
+			} else if ("4".equals(role.getData_scope())) {
+				dataScopeList.add(user.getDeptid());
 			}
 		}
 		if (dataScopeList.isEmpty()) {

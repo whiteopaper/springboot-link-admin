@@ -37,7 +37,7 @@ public class UserInfo extends JqGridParam {
 	private List<Role> roles;
 
 	// 用户的菜单
-	private List<Permission> menus;
+	private List<MenuVO> menus;
 	// 用户拥有的功能权限
 	private List<Permission> permissions;
 
@@ -148,11 +148,11 @@ public class UserInfo extends JqGridParam {
 		this.token = token;
 	}
 
-	public List<Permission> getMenus() {
+	public List<MenuVO> getMenus() {
 		return menus;
 	}
 
-	public void setMenus(List<Permission> menus) {
+	public void setMenus(List<MenuVO> menus) {
 		this.menus = menus;
 	}
 

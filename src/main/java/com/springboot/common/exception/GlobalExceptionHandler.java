@@ -4,33 +4,31 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.springboot.common.AppContext;
+import com.springboot.core.web.mvc.ResponseResult;
+
+/**
+ * 全局异常
+ * 
+ * @ClassName: GlobalExceptionHandler
+ * @Description: TODO(这里用一句话描述这个类的作用)
+ * @author 252956
+ * @date 2019年11月11日 下午1:28:23
+ *
+ */
 @ControllerAdvice
 class GlobalExceptionHandler {
 
-	public static final String DEFAULT_ERROR_VIEW = "error";
-
+	// json exceptin
 	@ExceptionHandler(value = Exception.class)
-	public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e)
+	@ResponseBody
+	public ResponseResult jsonErrorHandler(HttpServletRequest req, Exception e)
 			throws Exception {
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("message", e.getMessage());
-		mav.addObject("url", req.getRequestURL());
-		mav.setViewName(DEFAULT_ERROR_VIEW);
-		return mav;
+		ResponseResult r = new ResponseResult();
+		r.setCode(AppContext.CODE_50000);
+		r.setMsg("系统异常");
+		return r;
 	}
-
-	
-/*   //json exceptin
- * 	 @ExceptionHandler(value = Exception.class)
-	    @ResponseBody
-	    public ErrorInfo<String> jsonErrorHandler(HttpServletRequest req, Exception e) throws Exception {
-	        ErrorInfo<String> r = new ErrorInfo<>();
-	        r.setMessage(e.getMessage());
-	        r.setCode(ErrorInfo.ERROR);
-	        r.setData("Some Data");
-	        r.setUrl(req.getRequestURL().toString());
-	        return r;
-	    }*/
 }
