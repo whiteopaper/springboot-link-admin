@@ -28,6 +28,7 @@ import com.springboot.common.utils.StringUtils;
 public class AppContextInterceptor implements HandlerInterceptor {
 	static List<String> permitUrl = new ArrayList<String>();
 	static {
+		permitUrl.add("/");
 		permitUrl.add("/rest/user/login");
 		permitUrl.add("/public/rest/");
 	}

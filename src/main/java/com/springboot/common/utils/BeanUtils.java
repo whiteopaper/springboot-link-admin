@@ -113,13 +113,13 @@ public class BeanUtils implements Serializable {
 						setMethod.invoke(target, new Object[] { value });
 						// list 类型
 					} else if (List.class.isAssignableFrom(field.getType())) {
-						List list = new ArrayList();
-						for (Object valueOfLst : (ArrayList) value) {
+						List<Object> list = new ArrayList<Object>();
+						for (Object valueOfLst : (ArrayList<?>) value) {
 							Type type = field.getGenericType();
 							if (!(type instanceof ParameterizedType)) {
 								continue;
 							}
-							Class tmpClass = (Class) ((ParameterizedType) type)
+							Class<?> tmpClass = (Class<?>) ((ParameterizedType) type)
 									.getActualTypeArguments()[0];
 							Object tmp = tmpClass.newInstance();
 							copyObject(valueOfLst, tmp);

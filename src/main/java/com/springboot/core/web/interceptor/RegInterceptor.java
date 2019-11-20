@@ -3,7 +3,7 @@ package com.springboot.core.web.interceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * 
 * @ClassName: RegInterceptor 
@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 *
  */
 @Configuration
-public class RegInterceptor extends WebMvcConfigurerAdapter {
+public class RegInterceptor implements WebMvcConfigurer {
 	@Autowired
 	private AppContextInterceptor appContextInterceptor;
 
