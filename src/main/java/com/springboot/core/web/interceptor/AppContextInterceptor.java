@@ -16,26 +16,30 @@ import com.springboot.bcode.domain.auth.UserInfo;
 import com.springboot.common.AppContext;
 import com.springboot.common.GlobalUser;
 import com.springboot.common.utils.StringUtils;
+
 /**
  * 拦截器，优先执行，验证用户是否登录
-* @ClassName: AppContextInterceptor 
-* @Description: TODO(这里用一句话描述这个类的作用) 
-* @author 252956
-* @date 2019年10月21日 下午4:53:20 
-*
+ * 
+ * @ClassName: AppContextInterceptor
+ * @Description: TODO(这里用一句话描述这个类的作用)
+ * @author 252956
+ * @date 2019年10月21日 下午4:53:20
+ *
  */
 @Component
 public class AppContextInterceptor implements HandlerInterceptor {
 	static List<String> permitUrl = new ArrayList<String>();
 	static {
-		permitUrl.add("/");
 		permitUrl.add("/rest/user/login");
 		permitUrl.add("/public/rest/");
+		permitUrl.add("/index.html");
+		permitUrl.add("/static");
+		permitUrl.add("/favicon.ico");
 	}
 
 	private boolean permitAll(String requestURL) {
 		for (String url : permitUrl) {
-			if (requestURL.contains(url)) {
+			if (requestURL.contains(url) || requestURL.equals("/")) {
 				return true;
 			}
 		}
