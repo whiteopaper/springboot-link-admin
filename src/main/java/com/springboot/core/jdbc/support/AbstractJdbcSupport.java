@@ -261,22 +261,15 @@ public abstract class AbstractJdbcSupport implements IObjectOperation,
 	@Override
 	public int addOrUpdateOrDelete(String sql, final Object[] params) {
 		int num = 0;
-		try {
-			if (params == null || params.length == 0)
-				num = getJdbcTemplate().update(sql);
-			else
-				num = getJdbcTemplate().update(sql,
-						new PreparedStatementSetter() {
-							public void setValues(PreparedStatement ps)
-									throws SQLException {
-								for (int i = 0; i < params.length; i++)
-									ps.setObject(i + 1, params[i]);
-							}
-						});
-		} catch (Exception e) {
-			e.printStackTrace();
-			num = -1;
-		}
+		if (params == null || params.length == 0)
+			num = getJdbcTemplate().update(sql);
+		else
+			num = getJdbcTemplate().update(sql, new PreparedStatementSetter() {
+				public void setValues(PreparedStatement ps) throws SQLException {
+					for (int i = 0; i < params.length; i++)
+						ps.setObject(i + 1, params[i]);
+				}
+			});
 		return num;
 	}
 }

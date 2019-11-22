@@ -53,11 +53,22 @@ public class PermissionService implements IPermissionService {
 
 	@Override
 	public boolean add(Permission permission) throws AuthException {
-		if (permission == null) {
-			throw new AuthException("保存数据不能为空");
+		if (permission.getTypes() == null) {
+			throw new AuthException("权限类型不能为空");
 		}
 		if (StringUtils.isBlank(permission.getName())) {
-			throw new AuthException("name不能为空");
+			throw new AuthException("权限名不能为空");
+		}
+		if (StringUtils.isBlank(permission.getUrl())) {
+			throw new AuthException("路由地址不能为空");
+		}
+		if (permission.getTypes() == 1) {
+			if (StringUtils.isBlank(permission.getComponent_name())) {
+				throw new AuthException("组件名不能为空");
+			}
+			if (StringUtils.isBlank(permission.getComponent_path())) {
+				throw new AuthException("组件路径不能为空");
+			}
 		}
 		if (permission.getParentId() == null) {
 			permission.setParentId(0);
@@ -71,6 +82,26 @@ public class PermissionService implements IPermissionService {
 
 	@Override
 	public boolean update(Permission permission) throws AuthException {
+		if (permission.getTypes() == null) {
+			throw new AuthException("权限类型不能为空");
+		}
+		if (StringUtils.isBlank(permission.getName())) {
+			throw new AuthException("权限名不能为空");
+		}
+		if (StringUtils.isBlank(permission.getUrl())) {
+			throw new AuthException("路由地址不能为空");
+		}
+		if (permission.getTypes() == 1) {
+			if (StringUtils.isBlank(permission.getComponent_name())) {
+				throw new AuthException("组件名不能为空");
+			}
+			if (StringUtils.isBlank(permission.getComponent_path())) {
+				throw new AuthException("组件路径不能为空");
+			}
+		}
+		if (permission.getParentId() == null) {
+			permission.setParentId(0);
+		}
 		Permission permissionInfo = rightDao.select(permission.getId());
 		if (permissionInfo == null) {
 			throw new AuthException("没有对应的权限");

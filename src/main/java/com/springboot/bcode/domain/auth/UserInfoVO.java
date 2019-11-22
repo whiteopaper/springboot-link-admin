@@ -2,7 +2,7 @@ package com.springboot.bcode.domain.auth;
 
 import com.springboot.core.web.mvc.JqGridParam;
 
-public class UserInfoVO extends JqGridParam{
+public class UserInfoVO extends JqGridParam {
 	private String uid;
 	private String name;
 	private String password;
@@ -10,7 +10,9 @@ public class UserInfoVO extends JqGridParam{
 	private String mobile;
 	private Integer state;// 用户状态1:正常;0:禁用
 	private Integer deptid;// 部门id
+	private Integer jobid;// 岗位id
 	private String deptName;
+	private String jobName;
 	private String email;
 	private String avatar = "pic";
 	private String introduction = "hello word";
@@ -111,6 +113,22 @@ public class UserInfoVO extends JqGridParam{
 
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
+	}
+
+	public Integer getJobid() {
+		return jobid;
+	}
+
+	public void setJobid(Integer jobid) {
+		this.jobid = jobid;
+	}
+
+	public String getJobName() {
+		return jobName;
+	}
+
+	public void setJobName(String jobName) {
+		this.jobName = jobName;
 	}
 
 }

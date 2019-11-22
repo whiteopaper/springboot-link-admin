@@ -56,15 +56,12 @@ public class RoleService implements IRoleService {
 		if (StringUtils.isBlank(role.getName())) {
 			throw new AuthException("角色名不能为空");
 		}
-		if (role.getPermIds() == null || role.getPermIds() == null) {
-			throw new AuthException("条件不能为空");
-		}
 		int result = roleDao.insertRetrunId(role);
-		if (result <= 0) {
-			throw new AuthException("执行失败");
+
+		if (role.getPermIds() != null && role.getPermIds().length > 0) {
+			role.setId(result);
+			saveRelationPermission(role);
 		}
-		role.setId(result);
-		saveRelationRight(role);
 		return true;
 	}
 
@@ -81,30 +78,23 @@ public class RoleService implements IRoleService {
 		if (StringUtils.isBlank(role.getName())) {
 			throw new AuthException("角色名不能为空");
 		}
-		if (role.getPermIds() == null || role.getPermIds() == null) {
-			throw new AuthException("条件不能为空");
-		}
 		Role roleInfo = roleDao.select(role.getId());
 		if (roleInfo == null) {
 			throw new AuthException("未查询到角色信息");
 		}
 		BeanUtils.copyObject(roleInfo, role);
-		int result = roleDao.update(roleInfo);
-		if (result < 0) {
-			throw new AuthException("执行失败");
-		}
+		roleDao.update(roleInfo);
 
 		RolePermission rp = new RolePermission();
 		rp.setRoleId(role.getId());
 		roleDao.delete(rp);
-
-		saveRelationRight(role);
+		if (role.getPermIds() != null && role.getPermIds().length > 0) {
+			saveRelationPermission(role);
+		}
 		return true;
 	}
 
-	public boolean saveRelationRight(Role role) throws AuthException {
-
-
+	public boolean saveRelationPermission(Role role) {
 		List<RolePermission> rpList = new ArrayList<RolePermission>();
 		RolePermission rp = null;
 		for (int i = 0; i < role.getPermIds().length; i++) {

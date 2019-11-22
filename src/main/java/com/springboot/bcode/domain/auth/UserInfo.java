@@ -26,6 +26,8 @@ public class UserInfo extends JqGridParam {
 	private Integer state;// 用户状态1:正常;0:禁用
 	@Columns(column = "deptid")
 	private Integer deptid;// 部门id
+	@Columns(column = "jobid")
+	private Integer jobid;// 岗位id
 	@Columns(column = "email")
 	private String email;
 	private String avatar = "pic";
@@ -33,6 +35,7 @@ public class UserInfo extends JqGridParam {
 
 	private String token;
 	private String deptName;// 部门名称
+	private String jobName;// 岗位名称
 	// 角色
 	private List<Role> roles;
 
@@ -178,6 +181,22 @@ public class UserInfo extends JqGridParam {
 
 	public void setIntroduction(String introduction) {
 		this.introduction = introduction;
+	}
+
+	public Integer getJobid() {
+		return jobid;
+	}
+
+	public void setJobid(Integer jobid) {
+		this.jobid = jobid;
+	}
+
+	public String getJobName() {
+		return jobName;
+	}
+
+	public void setJobName(String jobName) {
+		this.jobName = jobName;
 	}
 
 }

@@ -39,7 +39,7 @@ public class AppContextInterceptor implements HandlerInterceptor {
 
 	private boolean permitAll(String requestURL) {
 		for (String url : permitUrl) {
-			if (requestURL.contains(url) || requestURL.equals("/")) {
+			if (requestURL.startsWith(url) || "/".equals(requestURL)) {
 				return true;
 			}
 		}

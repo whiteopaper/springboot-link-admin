@@ -125,8 +125,8 @@ public class UserService implements IUserService {
 				permissions.add(perm);
 			}
 		}
-		menus=PermissionAlgorithm.tree(menus);
-		
+		menus = PermissionAlgorithm.tree(menus);
+
 		user.setRoles(roles);
 		user.setMenus(PermissionAlgorithm.buildMenu(menus));
 		user.setPermissions(permissions);
@@ -241,13 +241,9 @@ public class UserService implements IUserService {
 		if (StringUtils.isBlank(vo.getPassword())) {
 			throw new AuthException("登陆密码不能为空");
 		}
-		if (vo.getRoleIds() == null || vo.getRoleIds().length == 0) {
-			throw new AuthException("请分配角色");
-		}
 		if (vo.getDeptid() == null) {
-			throw new AuthException("请分配部门");
+			throw new AuthException("请选择部门");
 		}
-
 		UserInfo user = new UserInfo();
 		BeanUtils.copyObject(user, vo);
 		user.setCreateTime(new Date());
@@ -260,16 +256,18 @@ public class UserService implements IUserService {
 			throw new AuthException("保存失败");
 		}
 
-		List<UserRole> urList = new ArrayList<UserRole>();
-		UserRole ur;
-		for (Integer roleId : vo.getRoleIds()) {
-			ur = new UserRole();
-			ur.setUserId(user.getUid());
-			ur.setRoleId(roleId);
-			urList.add(ur);
+		if (vo.getRoleIds() != null && vo.getRoleIds().length > 0) {
+			List<UserRole> urList = new ArrayList<UserRole>();
+			UserRole ur;
+			for (Integer roleId : vo.getRoleIds()) {
+				ur = new UserRole();
+				ur.setUserId(user.getUid());
+				ur.setRoleId(roleId);
+				urList.add(ur);
+			}
+			// 保存用户分配的角色
+			saveRelationRole(urList);
 		}
-		// 保存用户分配的角色
-		saveRelationRole(urList);
 		return true;
 	}
 
@@ -279,11 +277,8 @@ public class UserService implements IUserService {
 		if (vo.getUid() == null) {
 			throw new AuthException("用户不存在");
 		}
-		if (vo.getRoleIds() == null || vo.getRoleIds().length == 0) {
-			throw new AuthException("请分配角色");
-		}
 		if (vo.getDeptid() == null) {
-			throw new AuthException("请分配部门");
+			throw new AuthException("请选择部门");
 		}
 		UserInfo user = userDao.select(vo.getUid());
 		if (user == null) {
@@ -307,16 +302,18 @@ public class UserService implements IUserService {
 		delUr.setUserId(user.getUid());
 		userDao.delete(delUr);
 
-		List<UserRole> urList = new ArrayList<UserRole>();
-		UserRole ur;
-		for (Integer roleId : vo.getRoleIds()) {
-			ur = new UserRole();
-			ur.setUserId(user.getUid());
-			ur.setRoleId(roleId);
-			urList.add(ur);
+		if (vo.getRoleIds() != null && vo.getRoleIds().length > 0) {
+			List<UserRole> urList = new ArrayList<UserRole>();
+			UserRole ur;
+			for (Integer roleId : vo.getRoleIds()) {
+				ur = new UserRole();
+				ur.setUserId(user.getUid());
+				ur.setRoleId(roleId);
+				urList.add(ur);
+			}
+			// 保存用户分配的角色
+			saveRelationRole(urList);
 		}
-		// 保存用户分配的角色
-		saveRelationRole(urList);
 		return true;
 
 	}
