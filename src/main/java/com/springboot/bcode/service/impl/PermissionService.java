@@ -62,7 +62,7 @@ public class PermissionService implements IPermissionService {
 		if (StringUtils.isBlank(permission.getUrl())) {
 			throw new AuthException("路由地址不能为空");
 		}
-		if (permission.getTypes() == 1) {
+		if (permission.getTypes() == 1 && permission.getI_frame() == 0) {
 			if (StringUtils.isBlank(permission.getComponent_name())) {
 				throw new AuthException("组件名不能为空");
 			}
@@ -91,7 +91,7 @@ public class PermissionService implements IPermissionService {
 		if (StringUtils.isBlank(permission.getUrl())) {
 			throw new AuthException("路由地址不能为空");
 		}
-		if (permission.getTypes() == 1) {
+		if (permission.getTypes() == 1 && permission.getI_frame() == 0) {
 			if (StringUtils.isBlank(permission.getComponent_name())) {
 				throw new AuthException("组件名不能为空");
 			}

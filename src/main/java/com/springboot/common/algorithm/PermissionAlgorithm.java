@@ -56,7 +56,7 @@ public class PermissionAlgorithm {
 			node.setChildrens(childrens);
 		}
 	}
-	
+
 	/**
 	 * 构建菜单
 	 *
@@ -73,42 +73,43 @@ public class PermissionAlgorithm {
 		for (Permission menuDTO : permissions) {
 			List<Permission> menuDTOList = menuDTO.getChildrens();
 			MenuVO menuVo = new MenuVO();
-			menuVo.setName(menuDTO.getComponent_name());
 			menuVo.setPath(menuDTO.getUrl());
-			menuVo.setHidden((menuDTO.getHidden()==1)?true:false);
+			menuVo.setHidden((menuDTO.getHidden() == 1) ? true : false);
 			menuVo.setMeta(new MenuMetaVO(menuDTO.getName(), menuDTO.getIcon(),
-					false));
+					menuDTO.getCache() == 1 ? true : false));
 			if (menuDTO.getParentId() == 0) {
-				if (menuDTO.getI_frame()==0) {
+				if (menuDTO.getI_frame() == 0) {
+					menuVo.setName(menuDTO.getName());
 					menuVo.setRedirect("noredirect");
 					menuVo.setComponent("Layout");
 				}
-			}else{
+			} else {
+				menuVo.setName(menuDTO.getComponent_name());
 				menuVo.setComponent(menuDTO.getComponent_path());
 			}
 			if (menuDTOList != null && !menuDTOList.isEmpty()) {
 				menuVo.setChildren(buildMenu(menuDTOList));
-			    // 处理是一级菜单并且没有子菜单的情况
-            } else if(menuDTO.getParentId() == 0){
-            	MenuVO menuVo1 = new MenuVO();
-                menuVo1.setMeta(menuVo.getMeta());
-                // 非外链
-                if (menuDTO.getI_frame()==0) {
-                	menuVo.setComponent("Layout");
-                    menuVo1.setName(menuDTO.getComponent_name());
-                    menuVo1.setPath(menuDTO.getUrl());
-                    menuVo1.setComponent(menuDTO.getComponent_path());
-                    menuVo1.setHidden((menuDTO.getHidden()==1)?true:false);
-                } else {
-                    menuVo1.setPath(menuDTO.getUrl());
-                }
-                List<MenuVO> list1 = new ArrayList<MenuVO>();
-                list1.add(menuVo1);
-                
-                menuVo.setName(null);
-                menuVo.setMeta(null);
-                menuVo.setChildren(list1);
-			}else{
+				// 处理是一级菜单并且没有子菜单的情况
+			} else if (menuDTO.getParentId() == 0) {
+				MenuVO menuVo1 = new MenuVO();
+				menuVo1.setMeta(menuVo.getMeta());
+				// 非外链
+				if (menuDTO.getI_frame() == 0) {
+					menuVo.setComponent("Layout");
+					menuVo1.setName(menuDTO.getComponent_name());
+					menuVo1.setPath(menuDTO.getUrl());
+					menuVo1.setComponent(menuDTO.getComponent_path());
+					menuVo1.setHidden((menuDTO.getHidden() == 1) ? true : false);
+				} else {
+					menuVo1.setPath(menuDTO.getUrl());
+				}
+				List<MenuVO> list1 = new ArrayList<MenuVO>();
+				list1.add(menuVo1);
+
+				menuVo.setName(null);
+				menuVo.setMeta(null);
+				menuVo.setChildren(list1);
+			} else {
 				menuVo.setChildren(new ArrayList<MenuVO>());
 			}
 			tree.add(menuVo);

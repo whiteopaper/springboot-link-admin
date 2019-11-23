@@ -58,12 +58,6 @@ public class VideoRest extends BaseRest {
 		videoService.view(path);
 	}
 
-	/**
-	 * 移除角色
-	 * 
-	 * @param id
-	 * @return
-	 */
 	@RequestMapping(value = "/tiktok/delete")
 	public ResponseResult delete(@RequestParam("id") Integer id) {
 		ResponseResult rep = new ResponseResult();
