@@ -8,6 +8,7 @@ public class MenuVO {
 	private Boolean hidden;//
 	private String redirect;
 	private String component;
+	private Boolean root;// 根节点
 
 	private MenuMetaVO meta;
 
@@ -67,6 +68,14 @@ public class MenuVO {
 
 	public void setChildren(List<MenuVO> children) {
 		this.children = children;
+	}
+
+	public Boolean getRoot() {
+		return root;
+	}
+
+	public void setRoot(Boolean root) {
+		this.root = root;
 	}
 
 }

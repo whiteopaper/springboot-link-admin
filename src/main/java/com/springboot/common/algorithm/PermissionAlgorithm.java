@@ -77,7 +77,8 @@ public class PermissionAlgorithm {
 			menuVo.setHidden((menuDTO.getHidden() == 1) ? true : false);
 			menuVo.setMeta(new MenuMetaVO(menuDTO.getName(), menuDTO.getIcon(),
 					menuDTO.getCache() == 1 ? true : false));
-			if (menuDTO.getParentId() == 0) {
+			menuVo.setRoot((menuDTO.getParentId() == 0) ? true : false);
+			if (menuDTO.getParentId() == 0 || menuDTO.getTypes() == 0) {
 				if (menuDTO.getI_frame() == 0) {
 					menuVo.setName(menuDTO.getName());
 					menuVo.setRedirect("noredirect");
@@ -100,6 +101,7 @@ public class PermissionAlgorithm {
 					menuVo1.setPath(menuDTO.getUrl());
 					menuVo1.setComponent(menuDTO.getComponent_path());
 					menuVo1.setHidden((menuDTO.getHidden() == 1) ? true : false);
+					menuVo1.setRoot((menuDTO.getParentId() == 0) ? true : false);
 				} else {
 					menuVo1.setPath(menuDTO.getUrl());
 				}

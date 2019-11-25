@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50540
 File Encoding         : 65001
 
-Date: 2019-11-23 15:24:12
+Date: 2019-11-25 15:25:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -156,7 +156,7 @@ CREATE TABLE `t_web_logs` (
   `response_result` varchar(2000) DEFAULT NULL,
   `state` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1891 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1912 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_web_logs
@@ -183,7 +183,7 @@ CREATE TABLE `t_web_permission` (
   `cache` int(11) DEFAULT NULL,
   `hidden` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_web_permission
@@ -193,7 +193,7 @@ INSERT INTO `t_web_permission` VALUES ('4', '外链', '0', '1', '1', 'https://gi
 INSERT INTO `t_web_permission` VALUES ('5', '错误页面', '0', '0', '0', '/error', null, null, '199', null, '', '', '404', '0', '0');
 INSERT INTO `t_web_permission` VALUES ('6', '401', '5', '1', '0', '/error/401', null, null, '30', null, 'Page401', '/error-page/401', null, '0', '0');
 INSERT INTO `t_web_permission` VALUES ('7', '404', '5', '1', '0', '/error/404', null, null, '31', null, 'Page404', '/error-page/404', null, '0', '0');
-INSERT INTO `t_web_permission` VALUES ('8', '系统权限', '0', '0', '0', '/permission', null, null, '100', null, 'Permission', '', 'lock', '0', '0');
+INSERT INTO `t_web_permission` VALUES ('8', '系统权限', '0', '0', '0', '/permission', null, null, '100', null, '', '', 'lock', '0', '0');
 INSERT INTO `t_web_permission` VALUES ('9', '用户管理', '8', '1', '0', '/permission/user', null, null, '1', null, 'User', '/permission/user', '', '0', '0');
 INSERT INTO `t_web_permission` VALUES ('10', '角色管理', '8', '1', '0', '/permission/role', null, null, '2', null, 'Role', '/permission/role', null, '0', '0');
 INSERT INTO `t_web_permission` VALUES ('11', '权限管理', '8', '1', '0', '/permission/permission', null, null, '3', null, 'Permission', '/permission/permission', null, '0', '0');
@@ -228,9 +228,9 @@ INSERT INTO `t_web_permission` VALUES ('49', '岗位管理', '8', '1', '0', '/pe
 INSERT INTO `t_web_permission` VALUES ('50', '添加岗位', '49', '2', '0', '/rest/job/add', null, null, '1', null, '', '', '', '0', '0');
 INSERT INTO `t_web_permission` VALUES ('51', '修改岗位', '49', '2', '0', '/rest/job/update', null, null, '2', null, '', '', '', '0', '0');
 INSERT INTO `t_web_permission` VALUES ('52', '删除岗位', '49', '2', '0', '/rest/job/delete', null, null, '3', null, '', '', '', '0', '0');
-INSERT INTO `t_web_permission` VALUES ('54', '组件', '0', '0', '0', '/components', null, null, '103', null, 'sfd', '', 'component', '0', '0');
+INSERT INTO `t_web_permission` VALUES ('54', '组件', '0', '0', '0', '/component', null, null, '103', null, '', '', 'component', '0', '0');
 INSERT INTO `t_web_permission` VALUES ('55', 'pdf', '54', '1', '0', '/component/pdf', null, null, '6', null, 'Pdf', '/component/pdf', '', '0', '0');
-INSERT INTO `t_web_permission` VALUES ('56', 'excel', '54', '1', '0', '/component/excel', null, null, '7', null, 'excel', '/component/excel', '', '0', '0');
+INSERT INTO `t_web_permission` VALUES ('56', 'excel', '54', '0', '0', '/excel', null, null, '7', null, '', '', '', '0', '0');
 INSERT INTO `t_web_permission` VALUES ('57', 'zip', '54', '1', '0', '/component/zip', null, null, '8', null, 'Zip', '/component/zip', '', '0', '0');
 INSERT INTO `t_web_permission` VALUES ('58', '打赏', '0', '1', '1', 'https://252956.github.io/pages/donate.html', null, null, '203', null, '', '', 'donate', '0', '0');
 INSERT INTO `t_web_permission` VALUES ('59', 'upload', '54', '1', '0', '/component/upload', null, null, '4', null, 'Upload', '/component/upload', '', '0', '0');
@@ -239,6 +239,9 @@ INSERT INTO `t_web_permission` VALUES ('63', 'JSON 编辑器', '54', '1', '0', '
 INSERT INTO `t_web_permission` VALUES ('64', '键盘图表', '54', '1', '0', '/component/keyboard', null, null, '11', null, 'KeyboardChart', '/component/keyboard', '', '0', '0');
 INSERT INTO `t_web_permission` VALUES ('65', '折线图', '54', '1', '0', '/component/line', null, null, '12', null, 'LineChart', '/component/line', '', '0', '0');
 INSERT INTO `t_web_permission` VALUES ('66', '混合图表', '54', '1', '0', '/component/mix-chart', null, null, '13', null, 'MixChart', '/component/mix-chart', '', '0', '0');
+INSERT INTO `t_web_permission` VALUES ('67', '导出 Excel', '56', '1', '0', '/component/excel/export-excel', null, null, '1', null, 'ExportExcel', '/component/excel/export-excel', '', '0', '0');
+INSERT INTO `t_web_permission` VALUES ('68', '导出 已选择项', '56', '1', '0', '/component/excel/select-excel', null, null, '2', null, 'SelectExcel', '/component/excel/select-excel', '', '0', '0');
+INSERT INTO `t_web_permission` VALUES ('69', '导出 多级表头', '56', '1', '0', '/component/excel/merge-header', null, null, '3', null, 'MergeHeader', '/component/excel/merge-header', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `t_web_role`
@@ -286,7 +289,7 @@ CREATE TABLE `t_web_role_permission` (
   `role_id` int(11) NOT NULL,
   `perm_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1764 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1870 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_web_role_permission
@@ -294,57 +297,60 @@ CREATE TABLE `t_web_role_permission` (
 INSERT INTO `t_web_role_permission` VALUES ('1428', '2', '32');
 INSERT INTO `t_web_role_permission` VALUES ('1429', '2', '33');
 INSERT INTO `t_web_role_permission` VALUES ('1430', '2', '4');
-INSERT INTO `t_web_role_permission` VALUES ('1713', '1', '8');
-INSERT INTO `t_web_role_permission` VALUES ('1714', '1', '9');
-INSERT INTO `t_web_role_permission` VALUES ('1715', '1', '16');
-INSERT INTO `t_web_role_permission` VALUES ('1716', '1', '17');
-INSERT INTO `t_web_role_permission` VALUES ('1717', '1', '18');
-INSERT INTO `t_web_role_permission` VALUES ('1718', '1', '19');
-INSERT INTO `t_web_role_permission` VALUES ('1719', '1', '10');
-INSERT INTO `t_web_role_permission` VALUES ('1720', '1', '43');
-INSERT INTO `t_web_role_permission` VALUES ('1721', '1', '20');
-INSERT INTO `t_web_role_permission` VALUES ('1722', '1', '21');
-INSERT INTO `t_web_role_permission` VALUES ('1723', '1', '22');
-INSERT INTO `t_web_role_permission` VALUES ('1724', '1', '23');
-INSERT INTO `t_web_role_permission` VALUES ('1725', '1', '11');
-INSERT INTO `t_web_role_permission` VALUES ('1726', '1', '24');
-INSERT INTO `t_web_role_permission` VALUES ('1727', '1', '25');
-INSERT INTO `t_web_role_permission` VALUES ('1728', '1', '26');
-INSERT INTO `t_web_role_permission` VALUES ('1729', '1', '27');
-INSERT INTO `t_web_role_permission` VALUES ('1730', '1', '13');
-INSERT INTO `t_web_role_permission` VALUES ('1731', '1', '28');
-INSERT INTO `t_web_role_permission` VALUES ('1732', '1', '29');
-INSERT INTO `t_web_role_permission` VALUES ('1733', '1', '30');
-INSERT INTO `t_web_role_permission` VALUES ('1734', '1', '31');
-INSERT INTO `t_web_role_permission` VALUES ('1735', '1', '49');
-INSERT INTO `t_web_role_permission` VALUES ('1736', '1', '50');
-INSERT INTO `t_web_role_permission` VALUES ('1737', '1', '51');
-INSERT INTO `t_web_role_permission` VALUES ('1738', '1', '52');
-INSERT INTO `t_web_role_permission` VALUES ('1739', '1', '41');
-INSERT INTO `t_web_role_permission` VALUES ('1740', '1', '44');
-INSERT INTO `t_web_role_permission` VALUES ('1741', '1', '45');
-INSERT INTO `t_web_role_permission` VALUES ('1742', '1', '46');
-INSERT INTO `t_web_role_permission` VALUES ('1743', '1', '32');
-INSERT INTO `t_web_role_permission` VALUES ('1744', '1', '33');
-INSERT INTO `t_web_role_permission` VALUES ('1745', '1', '34');
-INSERT INTO `t_web_role_permission` VALUES ('1746', '1', '48');
-INSERT INTO `t_web_role_permission` VALUES ('1747', '1', '54');
-INSERT INTO `t_web_role_permission` VALUES ('1748', '1', '62');
-INSERT INTO `t_web_role_permission` VALUES ('1749', '1', '63');
-INSERT INTO `t_web_role_permission` VALUES ('1750', '1', '59');
-INSERT INTO `t_web_role_permission` VALUES ('1751', '1', '55');
-INSERT INTO `t_web_role_permission` VALUES ('1752', '1', '56');
-INSERT INTO `t_web_role_permission` VALUES ('1753', '1', '57');
-INSERT INTO `t_web_role_permission` VALUES ('1754', '1', '64');
-INSERT INTO `t_web_role_permission` VALUES ('1755', '1', '65');
-INSERT INTO `t_web_role_permission` VALUES ('1756', '1', '66');
-INSERT INTO `t_web_role_permission` VALUES ('1757', '1', '5');
-INSERT INTO `t_web_role_permission` VALUES ('1758', '1', '6');
-INSERT INTO `t_web_role_permission` VALUES ('1759', '1', '7');
-INSERT INTO `t_web_role_permission` VALUES ('1760', '1', '2');
-INSERT INTO `t_web_role_permission` VALUES ('1761', '1', '14');
-INSERT INTO `t_web_role_permission` VALUES ('1762', '1', '4');
-INSERT INTO `t_web_role_permission` VALUES ('1763', '1', '58');
+INSERT INTO `t_web_role_permission` VALUES ('1816', '1', '8');
+INSERT INTO `t_web_role_permission` VALUES ('1817', '1', '9');
+INSERT INTO `t_web_role_permission` VALUES ('1818', '1', '16');
+INSERT INTO `t_web_role_permission` VALUES ('1819', '1', '17');
+INSERT INTO `t_web_role_permission` VALUES ('1820', '1', '18');
+INSERT INTO `t_web_role_permission` VALUES ('1821', '1', '19');
+INSERT INTO `t_web_role_permission` VALUES ('1822', '1', '10');
+INSERT INTO `t_web_role_permission` VALUES ('1823', '1', '43');
+INSERT INTO `t_web_role_permission` VALUES ('1824', '1', '20');
+INSERT INTO `t_web_role_permission` VALUES ('1825', '1', '21');
+INSERT INTO `t_web_role_permission` VALUES ('1826', '1', '22');
+INSERT INTO `t_web_role_permission` VALUES ('1827', '1', '23');
+INSERT INTO `t_web_role_permission` VALUES ('1828', '1', '11');
+INSERT INTO `t_web_role_permission` VALUES ('1829', '1', '24');
+INSERT INTO `t_web_role_permission` VALUES ('1830', '1', '25');
+INSERT INTO `t_web_role_permission` VALUES ('1831', '1', '26');
+INSERT INTO `t_web_role_permission` VALUES ('1832', '1', '27');
+INSERT INTO `t_web_role_permission` VALUES ('1833', '1', '13');
+INSERT INTO `t_web_role_permission` VALUES ('1834', '1', '28');
+INSERT INTO `t_web_role_permission` VALUES ('1835', '1', '29');
+INSERT INTO `t_web_role_permission` VALUES ('1836', '1', '30');
+INSERT INTO `t_web_role_permission` VALUES ('1837', '1', '31');
+INSERT INTO `t_web_role_permission` VALUES ('1838', '1', '49');
+INSERT INTO `t_web_role_permission` VALUES ('1839', '1', '50');
+INSERT INTO `t_web_role_permission` VALUES ('1840', '1', '51');
+INSERT INTO `t_web_role_permission` VALUES ('1841', '1', '52');
+INSERT INTO `t_web_role_permission` VALUES ('1842', '1', '41');
+INSERT INTO `t_web_role_permission` VALUES ('1843', '1', '44');
+INSERT INTO `t_web_role_permission` VALUES ('1844', '1', '45');
+INSERT INTO `t_web_role_permission` VALUES ('1845', '1', '46');
+INSERT INTO `t_web_role_permission` VALUES ('1846', '1', '32');
+INSERT INTO `t_web_role_permission` VALUES ('1847', '1', '33');
+INSERT INTO `t_web_role_permission` VALUES ('1848', '1', '34');
+INSERT INTO `t_web_role_permission` VALUES ('1849', '1', '48');
+INSERT INTO `t_web_role_permission` VALUES ('1850', '1', '54');
+INSERT INTO `t_web_role_permission` VALUES ('1851', '1', '62');
+INSERT INTO `t_web_role_permission` VALUES ('1852', '1', '63');
+INSERT INTO `t_web_role_permission` VALUES ('1853', '1', '59');
+INSERT INTO `t_web_role_permission` VALUES ('1854', '1', '55');
+INSERT INTO `t_web_role_permission` VALUES ('1855', '1', '56');
+INSERT INTO `t_web_role_permission` VALUES ('1856', '1', '67');
+INSERT INTO `t_web_role_permission` VALUES ('1857', '1', '68');
+INSERT INTO `t_web_role_permission` VALUES ('1858', '1', '69');
+INSERT INTO `t_web_role_permission` VALUES ('1859', '1', '57');
+INSERT INTO `t_web_role_permission` VALUES ('1860', '1', '64');
+INSERT INTO `t_web_role_permission` VALUES ('1861', '1', '65');
+INSERT INTO `t_web_role_permission` VALUES ('1862', '1', '66');
+INSERT INTO `t_web_role_permission` VALUES ('1863', '1', '5');
+INSERT INTO `t_web_role_permission` VALUES ('1864', '1', '6');
+INSERT INTO `t_web_role_permission` VALUES ('1865', '1', '7');
+INSERT INTO `t_web_role_permission` VALUES ('1866', '1', '2');
+INSERT INTO `t_web_role_permission` VALUES ('1867', '1', '14');
+INSERT INTO `t_web_role_permission` VALUES ('1868', '1', '4');
+INSERT INTO `t_web_role_permission` VALUES ('1869', '1', '58');
 
 -- ----------------------------
 -- Table structure for `t_web_user`
