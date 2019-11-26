@@ -27,6 +27,7 @@ import com.springboot.common.AppToken;
 import com.springboot.common.GlobalUser;
 import com.springboot.common.algorithm.DepartmentAlgorithm;
 import com.springboot.common.algorithm.PermissionAlgorithm;
+import com.springboot.common.constant.DataScopeType;
 import com.springboot.common.exception.AuthException;
 import com.springboot.common.utils.BeanUtils;
 import com.springboot.common.utils.MD5Utils;
@@ -130,9 +131,28 @@ public class UserService implements IUserService {
 		user.setRoles(roles);
 		user.setMenus(PermissionAlgorithm.buildMenu(menus));
 		user.setPermissions(permissions);
-		user.setDatascopes(getDateScopes(user));
+		user.setDatascope(getDataScope(user));
+		user.setDatascopes(getDataScopes(user));
 		GlobalUser.setUserInfo(user);
 		return user;
+	}
+
+	/**
+	 * 找出用户角色拥有最大的数据权限
+	 *
+	 * @param @param user
+	 * @param @return 设定文件
+	 * @return Integer 返回类型
+	 *
+	 */
+	private Integer getDataScope(UserInfo user) {
+		Integer datascope = DataScopeType.self;
+		for (Role role : user.getRoles()) {
+			if (role.getData_scope() < datascope) {
+				datascope = role.getData_scope();
+			}
+		}
+		return datascope;
 	}
 
 	/***
@@ -143,20 +163,20 @@ public class UserService implements IUserService {
 	 * @return List<Integer> 返回类型
 	 *
 	 */
-	private List<Integer> getDateScopes(UserInfo user) {
+	private List<Integer> getDataScopes(UserInfo user) {
 		List<Integer> dataScopeList = new ArrayList<Integer>();
 		List<Department> deptAllList = departmentService.queryAll();
 		for (Role role : user.getRoles()) {
-			// 1用户自定义数据权限
-			if ("1".equals(role.getData_scope())) {
-				dataScopeList.addAll(roleService.queryDataScope(role.getId()));
-				// 2全部数据权限
-			} else if ("2".equals(role.getData_scope())) {
+			// 1全部数据权限
+			if (DataScopeType.all.equals(role.getData_scope())) {
 				for (Department dept : deptAllList) {
 					dataScopeList.add(dept.getId());
 				}
+				// 2用户自定义数据权限
+			} else if (DataScopeType.customize.equals(role.getData_scope())) {
+				dataScopeList.addAll(roleService.queryDataScope(role.getId()));
 				// 3本部门及以下数据权限
-			} else if ("3".equals(role.getData_scope())) {
+			} else if (DataScopeType.deptAndBelow.equals(role.getData_scope())) {
 				List<Department> findSelfAndAllChild = DepartmentAlgorithm
 						.findSelfAndAllChild(user.getDeptid(), deptAllList);
 				for (Department dept : findSelfAndAllChild) {
@@ -165,7 +185,7 @@ public class UserService implements IUserService {
 					}
 				}
 				// 4本部门数据权限
-			} else if ("4".equals(role.getData_scope())) {
+			} else if (DataScopeType.dept.equals(role.getData_scope())) {
 				dataScopeList.add(user.getDeptid());
 			}
 		}

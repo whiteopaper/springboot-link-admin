@@ -17,6 +17,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.springboot.common.AppContext;
+import com.springboot.common.utils.HttpUtils;
 import com.springboot.common.utils.IPUtils;
 import com.springboot.core.redis.IRedis;
 import com.springboot.core.redis.RedisUtils;
@@ -29,17 +31,17 @@ import com.springboot.core.redis.RedisUtils;
 * @date 2019年10月21日 下午4:53:28 
 *
  */
-/*@Aspect
+@Aspect
 @Component
 @Order(1)
 public class RequestLimitAspect {
 
 	private static final String REQ_LIMIT = "req_limit_";
 
-	*//**
-	 * 定义拦截规则：拦截com.link.security.springboot.controller包下面的所有类中，有@RequestLimitAnnotation注解的方法
+	/**
+	 * 定义拦截规则：拦截com.springboot.bcode.api包下面的所有类中，有@RequestLimitAnnotation注解的方法
 	 * 。
-	 *//*
+	 */
 	@Around("execution(* com.springboot.bcode.api..*(..)) "
 			+ "and @annotation(com.springboot.core.security.requestlimt.RequestLimit)")
 	public Object method(ProceedingJoinPoint pjp) throws Throwable {
@@ -52,9 +54,7 @@ public class RequestLimitAspect {
 			return pjp.proceed();
 		}
 
-		ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
-				.getRequestAttributes();
-		HttpServletRequest request = requestAttributes.getRequest();
+		HttpServletRequest request = HttpUtils.getRequest();
 
 		int time = limt.time();
 		int count = limt.count();
@@ -91,13 +91,13 @@ public class RequestLimitAspect {
 		return pjp.proceed();
 	}
 
-	*//**
+	/**
 	 * requestLimitKey: url_ip
 	 * 
 	 * @param url
 	 * @param ip
 	 * @return
-	 *//*
+	 */
 	private static String requestLimitKey(String url, String ip) {
 
 		StringBuilder sb = new StringBuilder();
@@ -108,13 +108,13 @@ public class RequestLimitAspect {
 		return sb.toString();
 	}
 
-	*//**
+	/**
 	 * 返回拒绝信息
 	 * 
 	 * @param request
 	 * @return
 	 * @throws IOException
-	 *//*
+	 */
 	private String returnLimit(HttpServletRequest request) throws IOException {
 
 		HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder
@@ -122,7 +122,8 @@ public class RequestLimitAspect {
 		PrintWriter out = response.getWriter();
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("application/json; charset=utf-8");
-		out.println("{\"code\":5003, \"msg\":\"service reject request!\"}");
+		out.println("{\"code\":" + AppContext.CODE_50004
+				+ ",\"msg\":\"service reject request!\"}");
 		out.flush();
 		out.close();
 		return null;
@@ -130,4 +131,3 @@ public class RequestLimitAspect {
 	}
 
 }
-*/

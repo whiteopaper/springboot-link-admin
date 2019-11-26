@@ -44,7 +44,9 @@ public class UserInfo extends JqGridParam {
 	// 用户拥有的功能权限
 	private List<Permission> permissions;
 
-	// 用户拥有的数据权限
+	// 数据权限范围（1：全部数据权限 2：自定数据权限 3：本部门及以下数据权限4：本部门数据权限 5：本人）
+	private Integer datascope;
+	// 户拥有的数据权限
 	private List<Integer> datascopes;
 
 	public String getPassword() {
@@ -197,6 +199,14 @@ public class UserInfo extends JqGridParam {
 
 	public void setJobName(String jobName) {
 		this.jobName = jobName;
+	}
+
+	public Integer getDatascope() {
+		return datascope;
+	}
+
+	public void setDatascope(Integer datascope) {
+		this.datascope = datascope;
 	}
 
 }

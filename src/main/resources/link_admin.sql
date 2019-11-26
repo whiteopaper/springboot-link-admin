@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50540
 File Encoding         : 65001
 
-Date: 2019-11-25 15:25:32
+Date: 2019-11-26 11:01:47
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -107,8 +107,8 @@ CREATE TABLE `t_web_dict` (
 -- ----------------------------
 -- Records of t_web_dict
 -- ----------------------------
-INSERT INTO `t_web_dict` VALUES ('2', 'data_scope', '1', '自定义数据权限', '1', '');
-INSERT INTO `t_web_dict` VALUES ('3', 'data_scope', '2', '全部数据权限', '2', '');
+INSERT INTO `t_web_dict` VALUES ('2', 'data_scope', '1', '全部数据权限', '1', '');
+INSERT INTO `t_web_dict` VALUES ('3', 'data_scope', '2', '自定义数据权限', '2', '');
 INSERT INTO `t_web_dict` VALUES ('4', 'data_scope', '3', '本部门及以下数据权限', '3', '');
 INSERT INTO `t_web_dict` VALUES ('5', 'data_scope', '4', '本部门数据权限', '4', '');
 INSERT INTO `t_web_dict` VALUES ('6', 'data_scope', '5', '仅本人数据权限', '5', '');
@@ -156,7 +156,7 @@ CREATE TABLE `t_web_logs` (
   `response_result` varchar(2000) DEFAULT NULL,
   `state` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1912 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1942 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_web_logs
@@ -251,16 +251,16 @@ CREATE TABLE `t_web_role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
   `levels` int(11) DEFAULT NULL COMMENT '新增用户时只能赋予比自己级别低的角色',
-  `data_scope` varchar(11) DEFAULT NULL COMMENT '数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）',
+  `data_scope` varchar(11) DEFAULT NULL COMMENT '数据范围（1：全部数据权限 2：自定数据权限 3：本部门及以下数据权限4：本部门数据权限 5：本人）',
   `description` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_web_role
 -- ----------------------------
-INSERT INTO `t_web_role` VALUES ('1', 'admin', null, '2', '超级管理员');
-INSERT INTO `t_web_role` VALUES ('2', 'editor', null, '1', '系统演示角色');
+INSERT INTO `t_web_role` VALUES ('1', 'admin', null, '1', '超级管理员');
+INSERT INTO `t_web_role` VALUES ('2', 'editor', null, '2', '系统演示角色');
 INSERT INTO `t_web_role` VALUES ('11', 'test', null, '5', '测试角色');
 
 -- ----------------------------
@@ -272,13 +272,12 @@ CREATE TABLE `t_web_role_dept` (
   `role_id` int(11) NOT NULL,
   `dept_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_web_role_dept
 -- ----------------------------
-INSERT INTO `t_web_role_dept` VALUES ('8', '2', '17');
-INSERT INTO `t_web_role_dept` VALUES ('9', '2', '6');
+INSERT INTO `t_web_role_dept` VALUES ('12', '2', '10');
 
 -- ----------------------------
 -- Table structure for `t_web_role_permission`

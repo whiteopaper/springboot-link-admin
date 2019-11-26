@@ -27,8 +27,7 @@ public class Role extends JqGridParam {
 	private String description;
 
 	@Columns(column = "data_scope")
-	private String data_scope;// 数据范围（1：自定数据权限 2：全部数据权限 3：本部门数据权限 4：本部门及以下数据权限
-								// 5：本人）
+	private Integer data_scope;// 数据范围（1：全部数据权限 2：自定数据权限 3：本部门及以下数据权限4：本部门数据权限 5：本人）
 	// 自定义数据权限
 	private Integer deptIds[];
 	// 权限id
@@ -58,7 +57,6 @@ public class Role extends JqGridParam {
 		this.description = description;
 	}
 
-
 	public Integer[] getPermIds() {
 		return permIds;
 	}
@@ -75,11 +73,11 @@ public class Role extends JqGridParam {
 		this.levels = levels;
 	}
 
-	public String getData_scope() {
+	public Integer getData_scope() {
 		return data_scope;
 	}
 
-	public void setData_scope(String data_scope) {
+	public void setData_scope(Integer data_scope) {
 		this.data_scope = data_scope;
 	}
 

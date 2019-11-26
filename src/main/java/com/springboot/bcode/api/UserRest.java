@@ -16,6 +16,7 @@ import com.springboot.common.exception.AuthException;
 import com.springboot.core.logger.LoggerUtil;
 import com.springboot.core.logger.OpertionBLog;
 import com.springboot.core.security.authorize.Requestauthorize;
+import com.springboot.core.security.requestlimt.RequestLimit;
 import com.springboot.core.web.mvc.BaseRest;
 import com.springboot.core.web.mvc.ResponseResult;
 
@@ -35,6 +36,8 @@ public class UserRest extends BaseRest {
 	@Autowired
 	private IUserService userService;
 
+	// 一分钟请求100次，等待300秒
+	@RequestLimit(time = 60, count = 100, waits = 300)
 	@OpertionBLog(title = "登录")
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public ResponseResult login(@RequestBody LoginVO vo) {
@@ -58,6 +61,7 @@ public class UserRest extends BaseRest {
 	 * @return ResponseResult 返回类型
 	 *
 	 */
+	@RequestLimit(time = 60, count = 100, waits = 300)
 	@RequestMapping(value = "info")
 	public ResponseResult info() {
 		ResponseResult rep = new ResponseResult();
@@ -152,7 +156,7 @@ public class UserRest extends BaseRest {
 		return rep;
 
 	}
-	
+
 	@OpertionBLog(title = "更新用户状态")
 	@RequestMapping(value = "updateState", method = RequestMethod.POST)
 	public ResponseResult updateState(@RequestBody UserInfoVO vo) {
@@ -169,6 +173,5 @@ public class UserRest extends BaseRest {
 		return rep;
 
 	}
-	
 
 }

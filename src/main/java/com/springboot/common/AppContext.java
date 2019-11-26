@@ -21,5 +21,7 @@ public class AppContext {
 	public static final int CODE_50002 = 50002;
 	// DemoSystem
 	public static final int CODE_50003 = 50003;
+	//service reject request
+	public static final int CODE_50004 = 50004;
 
 }

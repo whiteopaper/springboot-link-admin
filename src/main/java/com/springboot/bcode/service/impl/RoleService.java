@@ -14,6 +14,7 @@ import com.springboot.bcode.domain.auth.Role;
 import com.springboot.bcode.domain.auth.RoleDept;
 import com.springboot.bcode.domain.auth.RolePermission;
 import com.springboot.bcode.service.IRoleService;
+import com.springboot.common.constant.DataScopeType;
 import com.springboot.common.exception.AuthException;
 import com.springboot.common.utils.BeanUtils;
 import com.springboot.common.utils.StringUtils;
@@ -157,8 +158,8 @@ public class RoleService implements IRoleService {
 		}
 
 		// 自定义数据权限
-		if (role.getData_scope().equals("1")) {
-			if (role.getDeptIds() == null) {
+		if (role.getData_scope() == DataScopeType.customize) {
+			if (role.getDeptIds() == null || role.getDeptIds().length == 0) {
 				throw new AuthException("自定义数据权限不能为空");
 			}
 			RoleDept delRoleDept = new RoleDept();
@@ -174,8 +175,6 @@ public class RoleService implements IRoleService {
 				rdList.add(rd);
 			}
 			roleDao.insertRoleDetp(rdList);
-		} else {
-
 		}
 		roleInfo.setData_scope(role.getData_scope());
 		roleDao.update(roleInfo);
