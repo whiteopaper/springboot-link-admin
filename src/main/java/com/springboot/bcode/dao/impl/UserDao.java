@@ -29,7 +29,7 @@ public class UserDao extends BaseDaoImpl implements IUserDao {
 	private String userPageSql(UserInfo user, int type) {
 		StringBuilder sql = new StringBuilder();
 		if (type == 0) {
-			sql.append(" select  u.uid,u.name,u.vsername,u.password,u.mobile,u.createTime,u.state,u.deptid,d.name as deptName,j.name as jobName from t_web_user u  ");
+			sql.append(" select  u.uid,u.name,u.vsername,u.password,u.mobile,u.createTime,u.state,u.deptid,d.name as deptName,u.jobid,j.name as jobName from t_web_user u  ");
 			sql.append(" left join t_web_dept d on d.id=u.deptid ");
 			sql.append(" left join t_web_job j on j.id=u.jobid ");
 		} else {
@@ -51,11 +51,6 @@ public class UserDao extends BaseDaoImpl implements IUserDao {
 			sql.append(" and u.mobile like '%").append(
 					user.getMobile().trim() + "%' ");
 		}
-		/*if (StringUtils.isNotBlank(user.getDeptName())) {
-			sql.append(" and d.name like '%").append(
-					user.getDeptName().trim() + "%' ");
-
-		}*/
 		if (user.getDeptid() != null && user.getDeptid() != 0) {
 			sql.append(" and u.deptid=" + user.getDeptid() + "");
 		}

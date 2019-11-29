@@ -21,6 +21,7 @@ import com.springboot.bcode.domain.auth.Permission;
 import com.springboot.bcode.domain.auth.UserInfo;
 import com.springboot.common.AppContext;
 import com.springboot.common.GlobalUser;
+import com.springboot.common.utils.HttpUtils;
 import com.springboot.common.utils.IPUtils;
 import com.springboot.core.logger.LoggerUtil;
 
@@ -54,7 +55,7 @@ public class RequestauthorizeAspect {
 
 		ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
 				.getRequestAttributes();
-		HttpServletRequest request = requestAttributes.getRequest();
+		HttpServletRequest request = HttpUtils.getRequest();
 		HttpServletResponse response = requestAttributes.getResponse();
 
 		UserInfo userInfo = GlobalUser.getUserInfo();
@@ -86,14 +87,14 @@ public class RequestauthorizeAspect {
 				e.printStackTrace();
 			}
 		} else {
-			Permission currentRight = null;
-			for (Permission right : permissions) {
-				if (url.equals(right.getUrl())) {
-					currentRight = right;
+			boolean hasPermission = false;
+			for (Permission perm : permissions) {
+				if (url.equals(perm.getUrl())) {
+					hasPermission = true;
 					break;
 				}
 			}
-			if (currentRight == null) {
+			if (!hasPermission) {
 				try {
 					LoggerUtil.warn("用户IP[" + ip + "]访问地址[" + url + "]暂无权限");
 					return returnAuthorizeRequests(request, response);
@@ -123,7 +124,7 @@ public class RequestauthorizeAspect {
 		response.setContentType("application/json; charset=utf-8");
 		out.println("{\"code\":"
 				+ AppContext.CODE_50002
-				+ ", \"msg\":\"no permission, please contact the administrator!\"}");
+				+ ", \"msg\":\"No permission, please contact the administrator!\"}");
 		out.flush();
 		out.close();
 		return null;

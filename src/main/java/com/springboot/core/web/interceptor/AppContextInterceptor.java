@@ -75,7 +75,7 @@ public class AppContextInterceptor implements HandlerInterceptor {
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("application/json; charset=utf-8");
 		out.println("{\"code\":" + AppContext.CODE_50001
-				+ ", \"msg\":\"No authority, Please log in!\"}");
+				+ ", \"msg\":\"Please login first!\"}");
 		out.flush();
 		out.close();
 	}

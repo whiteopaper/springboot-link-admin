@@ -25,11 +25,12 @@ import com.springboot.core.redis.RedisUtils;
 
 /**
  * 请求频率限制
-* @ClassName: CrossConfig 
-* @Description: TODO(这里用一句话描述这个类的作用) 
-* @author 252956
-* @date 2019年10月21日 下午4:53:28 
-*
+ * 
+ * @ClassName: RequestLimitAspect
+ * @Description: TODO(这里用一句话描述这个类的作用)
+ * @author 252956
+ * @date 2019年11月29日 上午9:46:04
+ *
  */
 @Aspect
 @Component
@@ -39,7 +40,7 @@ public class RequestLimitAspect {
 	private static final String REQ_LIMIT = "req_limit_";
 
 	/**
-	 * 定义拦截规则：拦截com.springboot.bcode.api包下面的所有类中，有@RequestLimitAnnotation注解的方法
+	 * 定义拦截规则：拦截com.springboot.bcode.api包下面的所有类中，有@RequestLimit Annotation注解的方法
 	 * 。
 	 */
 	@Around("execution(* com.springboot.bcode.api..*(..)) "
@@ -85,9 +86,6 @@ public class RequestLimitAspect {
 			}
 		}
 
-		long start = System.currentTimeMillis();
-		System.out.println("AppRequestLimtAspect Aspect 耗时:"
-				+ (System.currentTimeMillis() - start));
 		return pjp.proceed();
 	}
 

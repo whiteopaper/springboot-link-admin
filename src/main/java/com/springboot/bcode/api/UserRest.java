@@ -98,8 +98,10 @@ public class UserRest extends BaseRest {
 		try {
 			rep.setResult(userService.queryPage(user));
 		} catch (AuthException e) {
+			rep.setCode(CODE_500);
 			LoggerUtil.error(e.getMessage());
 		} catch (Exception e) {
+			rep.setCode(CODE_500);
 			LoggerUtil.error(e.getMessage());
 		}
 		return rep;
