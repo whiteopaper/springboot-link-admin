@@ -61,7 +61,6 @@ public class UserRest extends BaseRest {
 	 * @return ResponseResult 返回类型
 	 *
 	 */
-	@RequestLimit(time = 60, count = 100, waits = 300)
 	@RequestMapping(value = "info")
 	public ResponseResult info() {
 		ResponseResult rep = new ResponseResult();

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.springboot.bcode.dao.IUserDao;
 import com.springboot.bcode.domain.auth.Department;
+import com.springboot.bcode.domain.auth.Job;
 import com.springboot.bcode.domain.auth.LoginVO;
 import com.springboot.bcode.domain.auth.ModifyPwdVO;
 import com.springboot.bcode.domain.auth.Permission;
@@ -20,6 +21,7 @@ import com.springboot.bcode.domain.auth.UserInfo;
 import com.springboot.bcode.domain.auth.UserInfoVO;
 import com.springboot.bcode.domain.auth.UserRole;
 import com.springboot.bcode.service.IDepartmentService;
+import com.springboot.bcode.service.IJobService;
 import com.springboot.bcode.service.IPermissionService;
 import com.springboot.bcode.service.IRoleService;
 import com.springboot.bcode.service.IUserService;
@@ -45,6 +47,8 @@ public class UserService implements IUserService {
 	private IPermissionService rightService;
 	@Autowired
 	private IDepartmentService departmentService;
+	@Autowired
+	private IJobService jobService;
 
 	@Override
 	public String login(LoginVO vo) {
@@ -93,12 +97,18 @@ public class UserService implements IUserService {
 		if (user == null) {
 			throw new AuthException("用户未登录");
 		}
-		// 获取当前用户的部门
+		// 部门
 		Department dept = departmentService.query(user.getDeptid());
 		if (dept == null) {
 			throw new AuthException("未查询到当前用户的部门");
 		}
 		user.setDeptName(dept.getName());
+		// 岗位
+		Job job = jobService.find(user.getJobid());
+		if (job != null) {
+			user.setJobName(job.getName());
+		}
+		// 角色
 		List<Role> roles = roleService.queryByUser(user.getUid());
 		if (roles == null || roles.isEmpty()) {
 			throw new AuthException("当前用户未分配角色");
@@ -108,6 +118,7 @@ public class UserService implements IUserService {
 		for (Role role : roles) {
 			roleIds.add(role.getId());
 		}
+		// 角色对应的权限
 		List<Permission> permissionList = rightService.queryByRole(roleIds
 				.toArray(new Integer[roleIds.size()]));
 

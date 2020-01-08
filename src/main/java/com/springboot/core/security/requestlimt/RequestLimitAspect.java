@@ -121,7 +121,7 @@ public class RequestLimitAspect {
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("application/json; charset=utf-8");
 		out.println("{\"code\":" + AppContext.CODE_50004
-				+ ",\"msg\":\"service reject request!\"}");
+				+ ",\"msg\":\"Service reject request!\"}");
 		out.flush();
 		out.close();
 		return null;

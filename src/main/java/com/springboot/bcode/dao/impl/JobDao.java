@@ -76,7 +76,9 @@ public class JobDao extends BaseDaoImpl implements IJobDao {
 
 	@Override
 	public Job selectOne(Integer id) {
-		return super.selectById(id, Job.class);
+		StringBuilder sql = new StringBuilder();
+		sql.append("select * from t_web_job where state=1 and id="+id+"");
+		return super.selectOne(sql.toString(), Job.class);
 	}
 
 	@Override
@@ -98,7 +100,7 @@ public class JobDao extends BaseDaoImpl implements IJobDao {
 	public int updateState(Integer id, int state) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("update t_web_job set state=? where id=?");
-		return super.addOrUpdateOrDelete(sql.toString(), new Object[] { state,
+		return super.insertOrUpdateOrDelete(sql.toString(), new Object[] { state,
 				id });
 	}
 

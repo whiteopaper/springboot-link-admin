@@ -81,7 +81,7 @@ public class PermissionAlgorithm {
 			if (menuDTO.getParentId() == 0 || menuDTO.getTypes() == 0) {
 				if (menuDTO.getI_frame() == 0) {
 					menuVo.setName(menuDTO.getName());
-					menuVo.setRedirect("noredirect");
+					menuVo.setRedirect("noRedirect");
 					menuVo.setComponent("Layout");
 				}
 			} else {

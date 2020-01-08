@@ -133,7 +133,7 @@ public class UserDao extends BaseDaoImpl implements IUserDao {
 	public int updateState(String uid, int state) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("update t_web_user set state=? where uid=?");
-		return super.addOrUpdateOrDelete(sql.toString(), new Object[] { state,
+		return super.insertOrUpdateOrDelete(sql.toString(), new Object[] { state,
 				uid });
 	}
 

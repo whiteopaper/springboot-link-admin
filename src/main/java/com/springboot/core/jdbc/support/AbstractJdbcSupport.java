@@ -77,14 +77,6 @@ public abstract class AbstractJdbcSupport implements IObjectOperation,
 				new BeanPropertyRowMapper<T>((Class<T>) entity.getClass()));
 	}
 
-	/*
-	 * @Override public <T> List<T> select(String sql, Object[] params,
-	 * RowMapper<T> mapper) { List<T> resultList = null; try { if (params !=
-	 * null && params.length > 0) resultList = getJdbcTemplate().query(sql,
-	 * params, mapper); else resultList = getJdbcTemplate().query(sql, mapper);
-	 * } catch (Exception e) { e.printStackTrace(); } return resultList; }
-	 */
-
 	@Override
 	public <T> int insert(T entity) {
 		if (entity == null) {
@@ -94,7 +86,7 @@ public abstract class AbstractJdbcSupport implements IObjectOperation,
 		if (sqlField == null) {
 			throw new JdbcException("insert SqlField is null");
 		}
-		return addOrUpdateOrDelete(sqlField.sql, sqlField.params.toArray());
+		return insertOrUpdateOrDelete(sqlField.sql, sqlField.params.toArray());
 	}
 
 	@Override
@@ -108,7 +100,6 @@ public abstract class AbstractJdbcSupport implements IObjectOperation,
 		}
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		final Object[] params = sqlField.params.toArray();
-		try {
 			if (params == null || params.length == 0) {
 				getJdbcTemplate().update(new PreparedStatementCreator() {
 					public PreparedStatement createPreparedStatement(
@@ -133,10 +124,6 @@ public abstract class AbstractJdbcSupport implements IObjectOperation,
 					}
 				}, keyHolder);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return -1;
-		}
 		return keyHolder.getKey().intValue();
 	}
 
@@ -149,7 +136,7 @@ public abstract class AbstractJdbcSupport implements IObjectOperation,
 		if (sqlField == null) {
 			throw new JdbcException("update SqlField 不能为空");
 		}
-		return addOrUpdateOrDelete(sqlField.sql, sqlField.params.toArray());
+		return insertOrUpdateOrDelete(sqlField.sql, sqlField.params.toArray());
 	}
 
 	@Override
@@ -161,7 +148,7 @@ public abstract class AbstractJdbcSupport implements IObjectOperation,
 		if (sqlField == null) {
 			throw new JdbcException("delete SqlField 不能为空");
 		}
-		return addOrUpdateOrDelete(sqlField.sql, sqlField.params.toArray());
+		return insertOrUpdateOrDelete(sqlField.sql, sqlField.params.toArray());
 	}
 
 	@Override
@@ -239,7 +226,6 @@ public abstract class AbstractJdbcSupport implements IObjectOperation,
 	@Override
 	public <T> List<T> select(String sql, Object[] params, Class<T> tClass) {
 		List<T> resultList = null;
-		try {
 			if (params != null && params.length > 0)
 				resultList = getJdbcTemplate().query(sql, params,
 						new BeanPropertyRowMapper<T>(tClass));
@@ -247,19 +233,25 @@ public abstract class AbstractJdbcSupport implements IObjectOperation,
 				// BeanPropertyRowMapper是自动映射实体类的
 				resultList = getJdbcTemplate().query(sql,
 						new BeanPropertyRowMapper<T>(tClass));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		return resultList;
 	}
 
 	@Override
 	public <T> T selectOne(String sql, Class<T> tClass) {
-		return getJdbcTemplate().queryForObject(sql, tClass);
+		return selectOne(sql, null, tClass);
 	}
 
 	@Override
-	public int addOrUpdateOrDelete(String sql, final Object[] params) {
+	public <T> T selectOne(String sql, final Object[] params, Class<T> tClass) {
+		List<T> resultList = select(sql, params, tClass);
+		if (resultList != null && resultList.size() > 0) {
+			return resultList.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public int insertOrUpdateOrDelete(String sql, final Object[] params) {
 		int num = 0;
 		if (params == null || params.length == 0)
 			num = getJdbcTemplate().update(sql);

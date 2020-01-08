@@ -13,7 +13,7 @@ public interface ISqlOperation {
 	 * @return int 返回类型
 	 *
 	 */
-	int addOrUpdateOrDelete(String sql, Object[] params);
+	int insertOrUpdateOrDelete(String sql, Object[] params);
 
 	/**
 	 * 根据sql查询
@@ -49,4 +49,15 @@ public interface ISqlOperation {
 	 *
 	 */
 	<T> T selectOne(String sql, Class<T> tClass);
+	/**
+	 * 根据sql查询
+	*
+	* @param @param sql
+	* @param @param params
+	* @param @param tClass
+	* @param @return    设定文件 
+	* @return T    返回类型 
+	*
+	 */
+	 <T> T selectOne(String sql,Object[] params, Class<T> tClass);
 }
