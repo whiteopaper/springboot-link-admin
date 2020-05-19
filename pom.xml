@@ -5,12 +5,10 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.link</groupId>
-	<artifactId>springboot-link-admin</artifactId>
+	<artifactId>qcx-springboot-admin</artifactId>
 	<version>0.0.1</version>
 
-	<name>springboot-link-admin</name>
-	<url>https://github.com/252956/springboot-link-admin</url>
+	<name>qcx-springboot-admin</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -108,21 +106,6 @@
 			<version>3.1</version>
 		</dependency>
 	</dependencies>
-
-	<repositories>
-		<repository>
-			<id>link-admin</id>
-			<name>link-admin Repository</name>
-			<url>http://repo1.maven.apache.org/maven2/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<layout>default</layout>
-		</repository>
-	</repositories>
 
 
 

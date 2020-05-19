@@ -28,6 +28,28 @@ CREATE TABLE `t_video` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
 
+DROP TABLE IF EXISTS `t_web_resume`;
+CREATE TABLE `t_web_resume` (
+  `id` varchar(32) NOT NULL,
+	`user_id` varchar(32) NOT NULL,
+  `intention_position` varchar(30) NOT NULL,
+	`intention_city` varchar(30) DEFAULT NULL,
+	`intention_wages` varchar(30) NOT NULL,
+	`education_school_time` varchar(100) NOT NULL,
+	`education_department_major` varchar(100) NOT NULL,
+	`internship_company_time` varchar(100) DEFAULT NULL,
+  `internship_position` varchar(30) DEFAULT NULL,
+	`internship_describe` varchar(1000) DEFAULT NULL,
+	`experience_title` varchar(100) DEFAULT NULL,
+	`experience_position` varchar(30) DEFAULT NULL,
+	`experience_describe` varchar(1000) DEFAULT NULL,
+  `honor_describe` varchar(300) DEFAULT NULL,
+	`self_comment` varchar(1000) DEFAULT NULL,
+	`visit_num` int DEFAULT NULL,
+
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 -- ----------------------------
 -- Records of t_video
 -- ----------------------------
